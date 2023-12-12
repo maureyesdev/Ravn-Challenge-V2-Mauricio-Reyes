@@ -5,6 +5,8 @@ export type ProductCreateData = {
   stock: number;
   // category: Category[];
   isEnabled?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 type ProductProps = {
@@ -18,7 +20,9 @@ export class Product {
   image: string;
   stock: number;
   // category: Category[];
-  isEnabled: boolean;
+  isEnabled?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 
   private constructor(props: ProductProps) {
     this.id = -1;
