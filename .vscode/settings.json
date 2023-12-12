@@ -1,0 +1,9 @@
+{
+  "[typescript]": {
+    "typescript.preferences.importModuleSpecifier": "non-relative"
+  },
+  "cSpell.words": [
+    "quickcart",
+    "trivago"
+  ]
+}
