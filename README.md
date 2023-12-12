@@ -71,3 +71,56 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+# Project todo
+
+## Quick Cart - tiny store
+
+## Build your tiny store
+
+You can choose the target of your business, be creative!. 
+
+Example: snack store, pet store, drug store.
+
+## Technical requirements
+
+- postgreSQL and Prisma
+- Express or Nestjs
+- Typescript
+- Jest
+- Prettier
+- ESLint
+- Rest or GraphQL
+- Github repository named Ravn-Challenge-V2-<YOUR_NAME>
+
+## Mandatory features
+
+1. [ ] Authentication endpoint (sign up, sign in , sign out)
+2. [ ] List products with pagination
+3. [ ] Search products by category
+4. [ ] Add 2 kinds of Users (manager, client)
+   1.  As Manager I can:
+          1. [ ] Create products
+          2. [ ] Update products
+          3. [ ] Delete products
+          4. [ ] Disable products
+          5. [ ] Show client orders
+          6. [ ] Upload images per product
+   2.  As a client I can:
+          1. [ ] See products
+          2. [ ] See the product details
+          3. [ ] Buy products
+          4. [ ] Add products to cart
+          5. [ ] Like products
+          6. [ ] Show my orders
+5. [ ] The product information (including images) should be visible for logged and not logged users
+6. [ ] Swagger/Postman documentation
+7. [ ] Tests, with a least a 80% of coverage
+
+## Extra points (optional)
+
+1. [ ] e2e testing, this will be considered very valuable
+2. [ ] When the stock of a product reaches 3, notify the last user that liked it and not purchased the product yet with an email. Use a background job and make sure to include the product's image in the email.
+3. [ ] Add forgot password functionality
+4. [ ] Send an email when the user change the password
+5. [ ] Deploy on Heroku
