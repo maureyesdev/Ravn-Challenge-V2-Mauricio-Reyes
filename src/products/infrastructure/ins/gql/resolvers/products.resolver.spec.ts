@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { ImageUploaderService } from '@quickcart/common/domain/services/image-uploader-service';
 import { CreateProductCommandHandler } from '@quickcart/products/application/commands/create-product/create-product-command-handler';
 import { GetProductsQueryHandler } from '@quickcart/products/application/queries/get-products/get-products-query-handler';
 import { ProductRepository } from '@quickcart/products/domain/entities/repositories/product-repository';
@@ -15,6 +16,8 @@ describe('ProductsResolver', () => {
         GetProductsQueryHandler, // TODO: should be mocked
         // TODO: Use Factory instead of value, need to be mocked
         { provide: ProductRepository, useValue: {} },
+        // TODO: Use Factory instead of value, need to be mocked
+        { provide: ImageUploaderService, useValue: {} },
       ],
     }).compile();
 
