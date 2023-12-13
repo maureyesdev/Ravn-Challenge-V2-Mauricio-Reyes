@@ -17,8 +17,10 @@ export class InMemoryProductRepository implements ProductRepository {
   ];
 
   async createOne(args: ProductCreateOneArgs): Promise<Product> {
+    throw new Error('Method not implemented.');
     const newProduct: Product = {
       ...args.data,
+      image: args.data.image,
       isEnabled: args.data.isEnabled,
       id: this.products.length + 1,
     };

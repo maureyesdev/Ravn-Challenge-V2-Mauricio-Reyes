@@ -9,9 +9,6 @@ export abstract class CreateProductDataInput implements ProductCreateData {
   @Field(() => Float, { nullable: false })
   price: number;
 
-  @Field()
-  image: string;
-
   @Field(() => Int, { nullable: false })
   stock: number;
 

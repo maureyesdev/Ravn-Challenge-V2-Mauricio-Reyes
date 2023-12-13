@@ -1,4 +1,5 @@
 import { ArgsType, Field } from '@nestjs/graphql';
+import { FileUpload, GraphQLUpload } from 'graphql-upload-ts';
 import { ProductCreateOneArgs } from '@quickcart/products/domain/entities/repositories/types/product-create-one-args';
 import { CreateProductDataInput } from '@quickcart/products/infrastructure/ins/gql/inputs/create-product-data.input';
 
@@ -6,4 +7,7 @@ import { CreateProductDataInput } from '@quickcart/products/infrastructure/ins/g
 export abstract class CreateProductArgs implements ProductCreateOneArgs {
   @Field(() => CreateProductDataInput)
   data: CreateProductDataInput;
+
+  @Field(() => GraphQLUpload)
+  image: Promise<FileUpload>;
 }
