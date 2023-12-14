@@ -28,6 +28,7 @@ module.exports = {
     'no-relative-import-paths/no-relative-import-paths': ['error'],
     'no-duplicate-imports': 'error',
     'no-console': 'error',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-restricted-imports': [
       'error',
       {

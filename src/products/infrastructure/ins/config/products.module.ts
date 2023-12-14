@@ -1,8 +1,5 @@
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { GetProductsQueryHandler } from 'src/products/application/queries/get-products/get-products-query-handler';
 import { ProductsResolver } from 'src/products/infrastructure/ins/gql/resolvers/products.resolver';
 import { ImageUploaderService } from '@quickcart/common/domain/services/image-uploader-service';
@@ -14,17 +11,7 @@ import { ProductRepository } from '@quickcart/products/domain/entities/repositor
 import { PrismaProductRepository } from '@quickcart/products/infrastructure/outs/persistence/prisma/prisma-product.repository';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({ load: [imageUploaderConfig] }),
-    GraphQLModule.forRootAsync<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      useFactory: () => ({
-        autoSchemaFile: true,
-        playground: false,
-        plugins: [ApolloServerPluginLandingPageLocalDefault()],
-      }),
-    }),
-  ],
+  imports: [ConfigModule.forRoot({ load: [imageUploaderConfig] })],
   providers: [
     PrismaService,
     ProductsResolver,
