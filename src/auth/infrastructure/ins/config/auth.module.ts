@@ -1,10 +1,15 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { SignOutCommandHandler } from '@quickcart/auth/application/commands/sign-out/sign-out-command-handler';
 import { SignUpCommandHandler } from '@quickcart/auth/application/commands/sign-up/sign-up-command-handler';
 import { SignInQueryHandler } from '@quickcart/auth/application/queries/sign-in/sign-in-query-handler';
 import { ValidateUserQueryHandler } from '@quickcart/auth/application/queries/validate-user/validate-user-query-handler';
+import {
+  AuthConfig,
+  authConfig,
+} from '@quickcart/auth/infrastructure/ins/config/auth.config';
 import { AuthResolver } from '@quickcart/auth/infrastructure/ins/gql/resolvers/auth.resolver';
 import { LocalStrategy } from '@quickcart/auth/infrastructure/outs/strategies/local.strategy';
 import { PasswordEncryptorService } from '@quickcart/common/domain/services/password-encryptor-service';
@@ -15,12 +20,17 @@ import { PrismaUserRepository } from '@quickcart/users/infrastructure/outs/persi
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ load: [authConfig] }),
     JwtModule.registerAsync({
-      // TODO: need to use config service
-      useFactory: () => ({
-        secret: 'secret',
-        signOptions: { expiresIn: '1d' },
-      }),
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const { jwt } = configService.get<AuthConfig>('auth');
+        return {
+          secret: jwt.accessToken.secret,
+          signOptions: { expiresIn: jwt.accessToken.expiration },
+        };
+      },
     }),
     PassportModule,
   ],
