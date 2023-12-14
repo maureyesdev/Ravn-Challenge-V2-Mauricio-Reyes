@@ -2,5 +2,8 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class SignOutCommandHandler {
-  execute() {}
+  execute() {
+    // delete refresh token
+    return true;
+  }
 }

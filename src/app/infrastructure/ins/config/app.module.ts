@@ -13,6 +13,7 @@ import { ProductsModule } from '@quickcart/products/infrastructure/ins/config/pr
         autoSchemaFile: true,
         playground: false,
         plugins: [ApolloServerPluginLandingPageLocalDefault()],
+        context: ({ req }) => ({ req }),
       }),
     }),
     ProductsModule,
