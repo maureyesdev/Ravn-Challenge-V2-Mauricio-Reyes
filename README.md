@@ -95,10 +95,10 @@ Example: snack store, pet store, drug store.
 
 ## Mandatory features
 
-1. [ ] Authentication endpoint (sign up, sign in , sign out)
+1. [x] Authentication endpoint (sign up, sign in , sign out)
 2. [ ] List products with pagination
 3. [ ] Search products by category
-4. [ ] Add 2 kinds of Users (manager, client)
+4. [x] Add 2 kinds of Users (manager, client)
    1.  As Manager I can:
           1. [ ] Create products
           2. [ ] Update products
