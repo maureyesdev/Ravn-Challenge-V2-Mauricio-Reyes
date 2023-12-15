@@ -1,14 +1,25 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { UserRoles } from '@quickcart/auth/infrastructure/ins/decorators/user-roles.decorator';
+import { JwtAuthGuard } from '@quickcart/auth/infrastructure/outs/guards/jwt-auth.guard';
+import { UserRolesGuard } from '@quickcart/auth/infrastructure/outs/guards/user-roles.guard';
+import { CreateUserCommandHandler } from '@quickcart/users/application/commands/create-user/create-user-command-handler';
+import { UserRole } from '@quickcart/users/domain/entities/user';
+import { CreateUserArgs } from '@quickcart/users/infrastructure/ins/gql/args/create-user.args';
 import { UserModel } from '@quickcart/users/infrastructure/ins/gql/models/user.model';
 
 @Resolver(() => UserModel)
 export class UsersResolver {
-  constructor() {}
+  constructor(
+    private readonly createUserCommandHandler: CreateUserCommandHandler,
+  ) {}
 
-  // @Mutation(() => UserModel)
-  // createUser() {
-  //   return {};
-  // }
+  @UseGuards(JwtAuthGuard, UserRolesGuard)
+  @UserRoles(UserRole.Manager)
+  @Mutation(() => UserModel)
+  createUser(@Args() args: CreateUserArgs) {
+    return this.createUserCommandHandler.execute(args);
+  }
 
   @Query(() => [UserModel], { name: 'users' })
   findAll() {

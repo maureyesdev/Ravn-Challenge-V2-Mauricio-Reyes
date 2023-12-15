@@ -11,6 +11,7 @@ import {
   authConfig,
 } from '@quickcart/auth/infrastructure/ins/config/auth.config';
 import { AuthResolver } from '@quickcart/auth/infrastructure/ins/gql/resolvers/auth.resolver';
+import { JwtStrategy } from '@quickcart/auth/infrastructure/outs/strategies/jwt.strategy';
 import { LocalStrategy } from '@quickcart/auth/infrastructure/outs/strategies/local.strategy';
 import { PasswordEncryptorService } from '@quickcart/common/domain/services/password-encryptor-service';
 import { BcryptPasswordEncryptorService } from '@quickcart/common/infrastructure/outs/password-encryptor/bcrypt/bcrypt-password-encryptor.service';
@@ -36,6 +37,7 @@ import { PrismaUserRepository } from '@quickcart/users/infrastructure/outs/persi
   ],
   providers: [
     LocalStrategy,
+    JwtStrategy,
     PrismaService,
     AuthResolver,
     SignUpCommandHandler,

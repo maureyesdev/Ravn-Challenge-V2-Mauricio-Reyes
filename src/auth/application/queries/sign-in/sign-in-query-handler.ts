@@ -9,7 +9,7 @@ export class SignInQueryHandler {
   // * All of the validation is being handled by the local strategy and guard
   // * At this point we have a real user already
   async execute(query: SignInQuery) {
-    const payload = { email: query.user.email };
+    const payload = { sub: query.user.id, email: query.user.email };
     const accessToken = await this.jwtService.signAsync(payload);
     // set refresh token in httpOnly cookie // ? should we care about the refresh token?
     return {

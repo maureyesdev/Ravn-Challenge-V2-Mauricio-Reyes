@@ -3,7 +3,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { SignOutCommandHandler } from '@quickcart/auth/application/commands/sign-out/sign-out-command-handler';
 import { SignUpCommandHandler } from '@quickcart/auth/application/commands/sign-up/sign-up-command-handler';
 import { SignInQueryHandler } from '@quickcart/auth/application/queries/sign-in/sign-in-query-handler';
-import { User as CurrentUser } from '@quickcart/auth/infrastructure/ins/decorators/user.decorator';
+import { CurrentUser } from '@quickcart/auth/infrastructure/ins/decorators/current-user.decorator';
 import { SignInArgs } from '@quickcart/auth/infrastructure/ins/gql/args/sign-in.args';
 import { SignUpArgs } from '@quickcart/auth/infrastructure/ins/gql/args/sign-up.args';
 import { SignInModel } from '@quickcart/auth/infrastructure/ins/gql/models/sign-in.model';

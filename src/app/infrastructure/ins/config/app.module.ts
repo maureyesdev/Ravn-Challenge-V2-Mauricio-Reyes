@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { AuthModule } from '@quickcart/auth/infrastructure/ins/config/auth.module';
 import { ProductsModule } from '@quickcart/products/infrastructure/ins/config/products.module';
+import { UsersModule } from '@quickcart/users/infrastructure/ins/config/users.module';
 
 @Module({
   imports: [
@@ -16,8 +17,9 @@ import { ProductsModule } from '@quickcart/products/infrastructure/ins/config/pr
         context: ({ req }) => ({ req }),
       }),
     }),
-    ProductsModule,
     AuthModule,
+    UsersModule,
+    ProductsModule,
   ],
 })
 export class AppModule {}

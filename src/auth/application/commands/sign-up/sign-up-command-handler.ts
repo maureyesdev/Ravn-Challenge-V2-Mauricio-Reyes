@@ -21,12 +21,15 @@ export class SignUpCommandHandler {
       return CustomError.Conflict('User already exist');
     }
     const user = User.create({
-      data: { ...command.data, role: UserRole.User },
+      data: {
+        ...command.data,
+        role: UserRole.User,
+        status: UserStatus.PendingVerification,
+      },
     });
     const newUser = await this.userRepository.createOne({
       data: {
         ...user,
-        status: UserStatus.PendingVerification,
         password: await this.passwordEncryptorService.encrypt(user.password),
       },
     });

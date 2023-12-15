@@ -38,6 +38,7 @@ export class User {
     this.email = props.data.email;
     this.password = props.data.password;
     this.role = props.data.role;
+    this.status = props.data.status;
   }
 
   static create(props: UserProps) {
