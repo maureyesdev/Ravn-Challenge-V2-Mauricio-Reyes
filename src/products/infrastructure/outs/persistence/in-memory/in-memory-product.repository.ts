@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { PaginatedData } from '@quickcart/common/domain/types/paginated-data';
 import { Product } from '@quickcart/products/domain/entities/product';
 import { ProductRepository } from '@quickcart/products/domain/entities/repositories/product-repository';
 import { ProductCreateOneArgs } from '@quickcart/products/domain/entities/repositories/types/product-create-one-args';
@@ -26,5 +27,9 @@ export class InMemoryProductRepository implements ProductRepository {
     };
     this.products.push(newProduct);
     return Promise.resolve(newProduct);
+  }
+
+  findMany(): Promise<PaginatedData<Product>> {
+    throw new Error('Method not implemented.');
   }
 }

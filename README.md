@@ -96,7 +96,7 @@ Example: snack store, pet store, drug store.
 ## Mandatory features
 
 1. [x] Authentication endpoint (sign up, sign in , sign out)
-2. [ ] List products with pagination
+2. [x] List products with pagination
 3. [ ] Search products by category
 4. [x] Add 2 kinds of Users (manager, client)
    1.  As Manager I can:

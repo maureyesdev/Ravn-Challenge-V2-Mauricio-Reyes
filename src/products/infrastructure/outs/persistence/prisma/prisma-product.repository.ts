@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { pagination as prismaPagination } from 'prisma-extension-pagination';
+import { PaginatedData } from '@quickcart/common/domain/types/paginated-data';
 import { PrismaService } from '@quickcart/common/infrastructure/outs/persistence/prisma/common/prisma.service';
 import { Product } from '@quickcart/products/domain/entities/product';
 import { ProductRepository } from '@quickcart/products/domain/entities/repositories/product-repository';
@@ -20,5 +22,15 @@ export class PrismaProductRepository implements ProductRepository {
       },
     });
     return newProduct;
+  }
+
+  async findMany(): Promise<PaginatedData<Product>> {
+    const prismaWithPagination = this.prismaService.$extends(
+      prismaPagination({ pages: { includePageCount: true } }),
+    );
+    const [products, pagination] = await prismaWithPagination.product
+      .paginate()
+      .withPages({ limit: 10, page: 1 });
+    return { pagination, data: products };
   }
 }
