@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GetProductsQueryHandler } from '@quickcart/products/application/queries/get-products/get-products-query-handler';
-import { ProductRepository } from '@quickcart/products/domain/entities/repositories/product-repository';
+import { ProductRepository } from '@quickcart/products/domain/repositories/product-repository';
 
 describe('GetProductsQueryHandler', () => {
   let provider: GetProductsQueryHandler;

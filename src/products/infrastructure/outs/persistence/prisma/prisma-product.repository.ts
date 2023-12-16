@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { pagination as prismaPagination } from 'prisma-extension-pagination';
 import { PaginatedData } from '@quickcart/common/domain/types/paginated-data';
 import { PrismaService } from '@quickcart/common/infrastructure/outs/persistence/prisma/common/prisma.service';
 import { Product } from '@quickcart/products/domain/entities/product';
-import { ProductRepository } from '@quickcart/products/domain/entities/repositories/product-repository';
-import { ProductCreateOneArgs } from '@quickcart/products/domain/entities/repositories/types/product-create-one-args';
+import { ProductRepository } from '@quickcart/products/domain/repositories/product-repository';
+import { ProductCreateOneArgs } from '@quickcart/products/domain/repositories/types/product-create-one-args';
+import { ProductFindManyArgs } from '@quickcart/products/domain/repositories/types/product-find-many-args';
 
 @Injectable()
 export class PrismaProductRepository implements ProductRepository {
@@ -12,6 +12,7 @@ export class PrismaProductRepository implements ProductRepository {
 
   async createOne(args: ProductCreateOneArgs): Promise<Product> {
     const { data } = args;
+    const categories = data.categories as number[];
     const newProduct = await this.prismaService.product.create({
       data: {
         name: data.name,
@@ -19,18 +20,24 @@ export class PrismaProductRepository implements ProductRepository {
         image: data.image,
         stock: data.stock,
         isEnabled: data.isEnabled,
+        categories: { connect: [...categories.map((id) => ({ id }))] },
       },
+      include: { categories: true },
     });
-    return newProduct;
+
+    return {
+      ...newProduct,
+      categories: newProduct.categories.map(({ id, name }) => ({ id, name })),
+    };
   }
 
-  async findMany(): Promise<PaginatedData<Product>> {
-    const prismaWithPagination = this.prismaService.$extends(
-      prismaPagination({ pages: { includePageCount: true } }),
+  async findMany(args: ProductFindManyArgs): Promise<PaginatedData<Product>> {
+    const { where } = args;
+    const { pagination, data } = await this.prismaService.paginate(
+      this.prismaService.product,
+      { where, include: { categories: true } },
     );
-    const [products, pagination] = await prismaWithPagination.product
-      .paginate()
-      .withPages({ limit: 10, page: 1 });
-    return { pagination, data: products };
+
+    return { pagination, data: data as Product[] };
   }
 }

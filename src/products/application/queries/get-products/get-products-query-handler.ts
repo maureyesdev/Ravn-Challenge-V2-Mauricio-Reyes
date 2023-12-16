@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { PaginatedData } from '@quickcart/common/domain/types/paginated-data';
+import { GetProductsQuery } from '@quickcart/products/application/queries/get-products/get-products-query';
 import { Product } from '@quickcart/products/domain/entities/product';
-import { ProductRepository } from '@quickcart/products/domain/entities/repositories/product-repository';
+import { ProductRepository } from '@quickcart/products/domain/repositories/product-repository';
 
 @Injectable()
 export class GetProductsQueryHandler {
   constructor(private readonly productRepository: ProductRepository) {}
 
-  // TODO: missing implementation of the filters (where)
-  async execute(): Promise<PaginatedData<Product>> {
-    const paginatedProducts = await this.productRepository.findMany();
+  async execute(query: GetProductsQuery): Promise<PaginatedData<Product>> {
+    const paginatedProducts = await this.productRepository.findMany({
+      where: query.where,
+    });
     return paginatedProducts;
   }
 }

@@ -14,4 +14,7 @@ export abstract class CreateProductDataInput implements ProductCreateData {
 
   @Field({ nullable: true })
   isEnabled?: boolean;
+
+  @Field(() => [Int], { nullable: true })
+  categories: number[];
 }

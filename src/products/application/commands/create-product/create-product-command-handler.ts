@@ -3,7 +3,7 @@ import { CustomError } from '@quickcart/common/domain/errors/custom-error';
 import { ImageUploaderService } from '@quickcart/common/domain/services/image-uploader-service';
 import { CreateProductCommand } from '@quickcart/products/application/commands/create-product/create-product-command';
 import { Product } from '@quickcart/products/domain/entities/product';
-import { ProductRepository } from '@quickcart/products/domain/entities/repositories/product-repository';
+import { ProductRepository } from '@quickcart/products/domain/repositories/product-repository';
 
 @Injectable()
 export class CreateProductCommandHandler {

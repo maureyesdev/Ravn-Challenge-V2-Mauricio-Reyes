@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ImageUploaderService } from '@quickcart/common/domain/services/image-uploader-service';
 import { CreateProductCommandHandler } from '@quickcart/products/application/commands/create-product/create-product-command-handler';
 import { GetProductsQueryHandler } from '@quickcart/products/application/queries/get-products/get-products-query-handler';
-import { ProductRepository } from '@quickcart/products/domain/entities/repositories/product-repository';
+import { ProductRepository } from '@quickcart/products/domain/repositories/product-repository';
 import { ProductsResolver } from '@quickcart/products/infrastructure/ins/gql/resolvers/products.resolver';
 
 describe('ProductsResolver', () => {

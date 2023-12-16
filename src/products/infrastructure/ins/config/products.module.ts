@@ -6,8 +6,12 @@ import { ImageUploaderService } from '@quickcart/common/domain/services/image-up
 import { imageUploaderConfig } from '@quickcart/common/infrastructure/ins/config/image-uploader.config';
 import { CloudinaryImageUploaderService } from '@quickcart/common/infrastructure/outs/image-uploader/cloudinary/cloudinary-image-uploader.service';
 import { PrismaService } from '@quickcart/common/infrastructure/outs/persistence/prisma/common/prisma.service';
+import { CreateCategoryCommandHandler } from '@quickcart/products/application/commands/create-category/create-category-command-handler';
 import { CreateProductCommandHandler } from '@quickcart/products/application/commands/create-product/create-product-command-handler';
-import { ProductRepository } from '@quickcart/products/domain/entities/repositories/product-repository';
+import { CategoryRepository } from '@quickcart/products/domain/repositories/category-repository';
+import { ProductRepository } from '@quickcart/products/domain/repositories/product-repository';
+import { CategoriesResolver } from '@quickcart/products/infrastructure/ins/gql/resolvers/categories.resolver';
+import { PrismaCategoryRepository } from '@quickcart/products/infrastructure/outs/persistence/prisma/prisma-category.repository';
 import { PrismaProductRepository } from '@quickcart/products/infrastructure/outs/persistence/prisma/prisma-product.repository';
 
 @Module({
@@ -15,10 +19,15 @@ import { PrismaProductRepository } from '@quickcart/products/infrastructure/outs
   providers: [
     PrismaService,
     ProductsResolver,
+    CategoriesResolver,
     { provide: ImageUploaderService, useClass: CloudinaryImageUploaderService },
     { provide: ProductRepository, useClass: PrismaProductRepository },
+    { provide: CategoryRepository, useClass: PrismaCategoryRepository },
+    // Product use cases
     CreateProductCommandHandler,
     GetProductsQueryHandler,
+    // Category use cases
+    CreateCategoryCommandHandler,
   ],
 })
 export class ProductsModule {}

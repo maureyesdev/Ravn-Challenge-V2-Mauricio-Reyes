@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ImageUploaderService } from '@quickcart/common/domain/services/image-uploader-service';
 import { CreateProductCommandHandler } from '@quickcart/products/application/commands/create-product/create-product-command-handler';
-import { ProductRepository } from '@quickcart/products/domain/entities/repositories/product-repository';
+import { ProductRepository } from '@quickcart/products/domain/repositories/product-repository';
 
 describe('CreateProductCommandHandler', () => {
   let command: CreateProductCommandHandler;
