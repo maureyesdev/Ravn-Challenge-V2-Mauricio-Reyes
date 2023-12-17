@@ -1,11 +1,9 @@
-// TODO: this might be object literals
-export enum UserStatus {
-  Active = 'Active',
-  Inactive = 'Inactive',
-  PendingVerification = 'PendingVerification',
-}
+export const UserStatus = {
+  Active: 'Active',
+  Inactive: 'Inactive',
+  PendingVerification: 'PendingVerification',
+} as const;
 
-// TODO: this might be object literals
 export enum UserRole {
   User = 'User',
   Manager = 'Manager',
@@ -16,6 +14,7 @@ export type UserCreateData = {
   password: string;
   role?: keyof typeof UserRole;
   status?: keyof typeof UserStatus;
+  currentCartId?: number;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -30,12 +29,14 @@ export class User {
   password: string;
   role: keyof typeof UserRole;
   status: keyof typeof UserStatus;
+  currentCartId?: number;
   createdAt?: Date;
   updatedAt?: Date;
 
   private constructor(props: UserProps) {
     this.id = -1;
     this.email = props.data.email;
+    this.currentCartId = props.data.currentCartId;
     this.password = props.data.password;
     this.role = props.data.role;
     this.status = props.data.status;

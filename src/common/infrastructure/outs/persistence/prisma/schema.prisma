@@ -8,15 +8,17 @@ datasource db {
 }
 
 model Product {
-  id         Int        @id @default(autoincrement())
-  name       String
-  price      Float
-  image      String
-  stock      Int
+  id        Int      @id @default(autoincrement())
+  name      String
+  price     Float
+  image     String
+  stock     Int
+  isEnabled Boolean  @map("is_enabled")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
   categories Category[]
-  isEnabled  Boolean    @map("is_enabled")
-  createdAt  DateTime   @default(now()) @map("created_at")
-  updatedAt  DateTime   @default(now()) @map("updated_at")
+  cartItem   CartItem[]
 
   @@map("products")
 }
@@ -27,21 +29,11 @@ model Category {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
 
-  Product   Product? @relation(fields: [productId], references: [id])
+  product   Product? @relation(fields: [productId], references: [id])
   productId Int?
 
   @@map("categories")
 }
-
-// model CategoriesOnProducts {
-//   id         Int      @id @default(autoincrement())
-//   productId  Int      @map("product_id")
-//   categoryId Int      @map("category_id")
-//   product    Product  @relation(fields: [productId], references: [id])
-//   category   Category @relation(fields: [categoryId], references: [id])
-
-//   @@map("categories_on_products")
-// }
 
 model User {
   id        Int        @id @default(autoincrement())
@@ -52,7 +44,37 @@ model User {
   createdAt DateTime   @default(now()) @map("created_at")
   updatedAt DateTime   @default(now()) @map("updated_at")
 
+  cart Cart[]
+
   @@map("users")
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  status    CartStatus
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @default(now()) @map("updated_at")
+
+  user     User?      @relation(fields: [userId], references: [id])
+  userId   Int?
+  cartItem CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  cart   Cart? @relation(fields: [cartId], references: [id])
+  cartId Int?
+
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+
+  @@map("cart_items")
 }
 
 enum UserRole {
@@ -64,4 +86,9 @@ enum UserStatus {
   Active
   Inactive
   PendingVerification
+}
+
+enum CartStatus {
+  Active
+  CheckedOut
 }

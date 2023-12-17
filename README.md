@@ -110,7 +110,7 @@ Example: snack store, pet store, drug store.
           1. [x] See products - getProductsQueryHandler
           2. [X] See the product details - getProductQueryHandler
           3. [ ] Buy products
-          4. [ ] Add products to cart
+          4. [x] Add products to cart
           5. [ ] Like products
           6. [ ] Show my orders
 5. [x] The product information (including images) should be visible for logged and not logged users - still missing the images currently handle just one image
