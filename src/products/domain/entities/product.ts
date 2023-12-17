@@ -1,4 +1,5 @@
 import { Category } from '@quickcart/products/domain/entities/category';
+import { User } from '@quickcart/users/domain/entities/user';
 
 export type ProductCreateData = {
   name: string;
@@ -7,6 +8,7 @@ export type ProductCreateData = {
   stock: number;
   categories?: Category[] | number[];
   isEnabled?: boolean;
+  likes?: User[];
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -23,6 +25,7 @@ export class Product {
   stock: number;
   categories: Category[] | number[];
   isEnabled?: boolean;
+  likes?: User[];
   createdAt?: Date;
   updatedAt?: Date;
 
@@ -34,6 +37,7 @@ export class Product {
     this.stock = props.data.stock;
     this.categories = props.data.categories ?? [];
     this.isEnabled = props.data.isEnabled ?? false;
+    this.likes = props.data.likes ?? [];
   }
 
   static create(props: ProductProps) {

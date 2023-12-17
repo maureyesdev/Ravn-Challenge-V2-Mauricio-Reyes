@@ -109,9 +109,9 @@ Example: snack store, pet store, drug store.
    2.  As a client I can:
           1. [x] See products - getProductsQueryHandler
           2. [X] See the product details - getProductQueryHandler
-          3. [ ] Buy products
+          3. [ ] Buy products - checkout
           4. [x] Add products to cart
-          5. [ ] Like products
+          5. [x] Like products
           6. [ ] Show my orders
 5. [x] The product information (including images) should be visible for logged and not logged users - still missing the images currently handle just one image
 6. [ ] Swagger/Postman documentation
