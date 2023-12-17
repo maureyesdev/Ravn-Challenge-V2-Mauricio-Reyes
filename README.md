@@ -100,20 +100,20 @@ Example: snack store, pet store, drug store.
 3. [x] Search products by category
 4. [x] Add 2 kinds of Users (manager, client)
    1.  As Manager I can:
-          1. [ ] Create products
-          2. [ ] Update products
-          3. [ ] Delete products
-          4. [ ] Disable products
+          1. [x] Create products - createProductCommandHandler
+          2. [x] Update products - updateProductCommandHandler
+          3. [x] Delete products - deleteProductCommandHandler
+          4. [x] Disable products - updateProductCommandHandler
           5. [ ] Show client orders
           6. [ ] Upload images per product
    2.  As a client I can:
-          1. [ ] See products
-          2. [ ] See the product details
+          1. [x] See products - getProductsQueryHandler
+          2. [X] See the product details - getProductQueryHandler
           3. [ ] Buy products
           4. [ ] Add products to cart
           5. [ ] Like products
           6. [ ] Show my orders
-5. [ ] The product information (including images) should be visible for logged and not logged users
+5. [x] The product information (including images) should be visible for logged and not logged users - still missing the images currently handle just one image
 6. [ ] Swagger/Postman documentation
 7. [ ] Tests, with a least a 80% of coverage
 
