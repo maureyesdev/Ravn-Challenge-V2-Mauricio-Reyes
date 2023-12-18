@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GetUsersOrdersQueryHandler } from '@quickcart/users/application/queries/get-users-orders/get-users-orders-query-handler';
-import { CartRepository } from '@quickcart/users/domain/repositories/cart-repository';
+import { UserRepository } from '@quickcart/users/domain/repositories/user-repository';
 
 describe('GetUsersOrdersQueryHandler', () => {
   let provider: GetUsersOrdersQueryHandler;
@@ -10,7 +10,7 @@ describe('GetUsersOrdersQueryHandler', () => {
       providers: [
         GetUsersOrdersQueryHandler,
         // TODO: mock with useFactory
-        { provide: CartRepository, useValue: {} },
+        { provide: UserRepository, useValue: {} },
       ],
     }).compile();
 

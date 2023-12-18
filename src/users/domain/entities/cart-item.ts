@@ -1,7 +1,7 @@
 export type CartItemCreateData = {
   productId: number;
   quantity: number;
-  cartId: number;
+  cartId?: number;
 };
 
 export type CartItemProps = {

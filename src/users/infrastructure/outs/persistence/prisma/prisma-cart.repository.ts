@@ -27,7 +27,7 @@ export class PrismaCartRepository implements CartRepository {
     });
     return {
       ...cart,
-      items: cart.cartItem,
+      cartItem: cart.cartItem,
     };
   }
 
@@ -39,7 +39,7 @@ export class PrismaCartRepository implements CartRepository {
     const { where, take, page } = args;
     const { pagination, data } = await this.prismaService.paginate(
       this.prismaService.cart,
-      { where },
+      { where, include: { user: true } },
       { page, perPage: take },
     );
     return { pagination, data: data as Cart[] };
@@ -58,7 +58,7 @@ export class PrismaCartRepository implements CartRepository {
     });
     return {
       ...updatedCart,
-      items: updatedCart.cartItem,
+      cartItem: updatedCart.cartItem,
     };
   }
 
@@ -67,9 +67,12 @@ export class PrismaCartRepository implements CartRepository {
       where: { status: CartStatus.Active, userId: userId },
       include: { cartItem: true },
     });
+    if (!cart) {
+      return null;
+    }
     return {
       ...cart,
-      items: cart.cartItem,
+      cartItem: cart.cartItem,
     };
   }
 

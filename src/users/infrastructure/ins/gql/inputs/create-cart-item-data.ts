@@ -9,6 +9,6 @@ export abstract class CreateCartItemInput implements CartItemCreateData {
   @Field(() => Int)
   quantity: number;
 
-  @Field(() => Int)
-  cartId: number;
+  @Field(() => Int, { nullable: true })
+  cartId?: number;
 }

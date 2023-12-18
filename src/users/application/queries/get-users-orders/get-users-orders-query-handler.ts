@@ -1,19 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { GetUsersOrdersQuery } from '@quickcart/users/application/queries/get-users-orders/get-users-orders-query';
-import { CartRepository } from '@quickcart/users/domain/repositories/cart-repository';
+import { UserRepository } from '@quickcart/users/domain/repositories/user-repository';
 
 @Injectable()
 export class GetUsersOrdersQueryHandler {
-  constructor(private readonly cartRepository: CartRepository) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   async execute(query: GetUsersOrdersQuery) {
-    const carts = await this.cartRepository.findMany({
+    const usersWithCart = await this.userRepository.findManyOrders({
       where: query.where,
       take: query.take,
       page: query.page,
     });
-
-    // Need to attached the users model to this
-    return carts;
+    return usersWithCart;
   }
 }

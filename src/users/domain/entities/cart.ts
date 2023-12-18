@@ -20,7 +20,7 @@ export class Cart {
   id: number;
   userId: number;
   status: keyof typeof CartStatus;
-  items: CartItem[];
+  cartItem: CartItem[];
   total: number;
   createdAt?: Date;
   updatedAt?: Date;

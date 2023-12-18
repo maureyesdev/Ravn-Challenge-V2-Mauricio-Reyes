@@ -23,6 +23,6 @@ export abstract class UserCartModel implements Omit<User, 'password'> {
   @Field()
   updatedAt: Date;
 
-  @Field(() => CartModel)
-  orders: CartModel;
+  @Field(() => [CartModel])
+  cart: CartModel[];
 }

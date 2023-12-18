@@ -1,3 +1,5 @@
+import { Cart } from '@quickcart/users/domain/entities/cart';
+
 export const UserStatus = {
   Active: 'Active',
   Inactive: 'Inactive',
@@ -29,6 +31,7 @@ export class User {
   password: string;
   role: keyof typeof UserRole;
   status: keyof typeof UserStatus;
+  cart?: Cart[];
   currentCartId?: number;
   createdAt?: Date;
   updatedAt?: Date;

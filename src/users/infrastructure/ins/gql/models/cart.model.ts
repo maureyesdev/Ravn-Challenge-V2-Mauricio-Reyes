@@ -13,8 +13,8 @@ export abstract class CartModel implements Cart {
   @Field(() => String)
   status: keyof typeof CartStatus;
 
-  @Field(() => CartItemModel)
-  items: CartItemModel[];
+  @Field(() => [CartItemModel])
+  cartItem: CartItemModel[];
 
   @Field(() => Float)
   total: number;

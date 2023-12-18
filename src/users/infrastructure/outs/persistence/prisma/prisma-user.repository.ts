@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { PaginatedData } from '@quickcart/common/domain/types/paginated-data';
 import { PrismaService } from '@quickcart/common/infrastructure/outs/persistence/prisma/common/prisma.service';
 import { User } from '@quickcart/users/domain/entities/user';
 import { UserLikeOneProductArgs } from '@quickcart/users/domain/repositories/types/user-like-one-product-args';
@@ -47,5 +48,15 @@ export class PrismaUserRepository implements UserRepository {
       this.logger.error('Error liking product', error, 'PrismaUserRepository');
       return false;
     }
+  }
+
+  async findManyOrders(args: any): Promise<PaginatedData<User>> {
+    const { where, take, page } = args;
+    const { pagination, data } = await this.prismaService.paginate(
+      this.prismaService.user,
+      { where, include: { cart: { include: { cartItem: true } } } },
+      { page, perPage: take },
+    );
+    return { pagination, data: data as User[] };
   }
 }
