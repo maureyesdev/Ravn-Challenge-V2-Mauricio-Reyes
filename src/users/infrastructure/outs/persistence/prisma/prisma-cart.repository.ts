@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CartStatus } from '@prisma/client';
+import { PaginatedData } from '@quickcart/common/domain/types/paginated-data';
 import { PrismaService } from '@quickcart/common/infrastructure/outs/persistence/prisma/common/prisma.service';
 import { Cart } from '@quickcart/users/domain/entities/cart';
 import { CartRepository } from '@quickcart/users/domain/repositories/cart-repository';
 import { CartCheckoutArgs } from '@quickcart/users/domain/repositories/types/cart-checkout-args';
 import { CartCreateOneArgs } from '@quickcart/users/domain/repositories/types/cart-create-one-args';
 import { CartCreateOneCartItemArgs } from '@quickcart/users/domain/repositories/types/cart-create-one-cart-item-args';
+import { CartFindManyArgs } from '@quickcart/users/domain/repositories/types/cart-find-many-args';
 import { CartFindOneArgs } from '@quickcart/users/domain/repositories/types/cart-find-one-args';
 import { CartUpdateOneArgs } from '@quickcart/users/domain/repositories/types/cart-update-one-args';
 
@@ -31,6 +33,16 @@ export class PrismaCartRepository implements CartRepository {
 
   findOne(_: CartFindOneArgs): Promise<Cart> {
     throw new Error('Method not implemented.');
+  }
+
+  async findMany(args: CartFindManyArgs): Promise<PaginatedData<Cart>> {
+    const { where, take, page } = args;
+    const { pagination, data } = await this.prismaService.paginate(
+      this.prismaService.cart,
+      { where },
+      { page, perPage: take },
+    );
+    return { pagination, data: data as Cart[] };
   }
 
   async updateOneCart(args: CartUpdateOneArgs): Promise<Cart> {
@@ -61,8 +73,17 @@ export class PrismaCartRepository implements CartRepository {
     };
   }
 
-  createOneCartItem(_: CartCreateOneCartItemArgs): Promise<unknown> {
-    throw new Error('Method not implemented.');
+  async createOneCartItem(args: CartCreateOneCartItemArgs): Promise<unknown> {
+    // add product to cart
+    await this.prismaService.cartItem.create({
+      data: {
+        cart: { connect: { id: args.data.cartId } },
+        product: { connect: { id: args.data.productId } },
+        quantity: args.data.quantity,
+      },
+    });
+
+    return true;
   }
 
   async checkout(args: CartCheckoutArgs): Promise<boolean> {

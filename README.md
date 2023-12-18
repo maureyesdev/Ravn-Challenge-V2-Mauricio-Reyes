@@ -104,7 +104,7 @@ Example: snack store, pet store, drug store.
           2. [x] Update products - updateProductCommandHandler
           3. [x] Delete products - deleteProductCommandHandler
           4. [x] Disable products - updateProductCommandHandler
-          5. [ ] Show client orders
+          5. [x] Show client orders
           6. [ ] Upload images per product
    2.  As a client I can:
           1. [x] See products - getProductsQueryHandler

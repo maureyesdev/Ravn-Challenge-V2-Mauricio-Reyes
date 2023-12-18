@@ -28,7 +28,6 @@ export class AddProductToCartCommandHandler {
       return true;
     } catch (error) {
       throw new Error(`Error adding products to cart: ${error.message}`);
-      return false;
     }
   }
 }
