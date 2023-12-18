@@ -6,7 +6,7 @@
   "semi": true,
   "useTabs": false,
   "importOrderParserPlugins": ["typescript", "decorators-legacy"],
-  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-sql"],
   "importOrder": [
     "^@nestjs/(.*)$",
     "<THIRD_PARTY_MODULES>",

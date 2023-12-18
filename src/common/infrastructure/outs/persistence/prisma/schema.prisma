@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  name      String
+  price     Float
+  image     String
+  stock     Int
+  isEnabled Boolean  @map("is_enabled")
+  likes     User[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  categories Category[]
+  cartItem   CartItem[]
+
+  @@map("products")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+
+  @@map("categories")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  password  String
+  role      UserRole
+  status    UserStatus
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @default(now()) @map("updated_at")
+
+  cart      Cart[]
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+
+  @@map("users")
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  status    CartStatus
+  total     Float
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @default(now()) @map("updated_at")
+
+  user     User?      @relation(fields: [userId], references: [id])
+  userId   Int?
+  cartItem CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  cart   Cart? @relation(fields: [cartId], references: [id])
+  cartId Int?
+
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+
+  @@map("cart_items")
+}
+
+enum UserRole {
+  Manager
+  User
+}
+
+enum UserStatus {
+  Active
+  Inactive
+  PendingVerification
+}
+
+enum CartStatus {
+  Active
+  CheckedOut
+}

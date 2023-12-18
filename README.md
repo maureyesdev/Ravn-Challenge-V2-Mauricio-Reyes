@@ -71,3 +71,56 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+# Project todo
+
+## Quick Cart - tiny store
+
+## Build your tiny store
+
+You can choose the target of your business, be creative!. 
+
+Example: snack store, pet store, drug store.
+
+## Technical requirements
+
+- postgreSQL and Prisma
+- Express or Nestjs
+- Typescript
+- Jest
+- Prettier
+- ESLint
+- Rest or GraphQL
+- Github repository named Ravn-Challenge-V2-<YOUR_NAME>
+
+## Mandatory features
+
+1. [x] Authentication endpoint (sign up, sign in , sign out)
+2. [x] List products with pagination
+3. [x] Search products by category
+4. [x] Add 2 kinds of Users (manager, client)
+   1.  As Manager I can:
+          1. [x] Create products - createProductCommandHandler
+          2. [x] Update products - updateProductCommandHandler
+          3. [x] Delete products - deleteProductCommandHandler
+          4. [x] Disable products - updateProductCommandHandler
+          5. [x] Show client orders
+          6. [ ] Upload images per product
+   2.  As a client I can:
+          1. [x] See products - getProductsQueryHandler
+          2. [X] See the product details - getProductQueryHandler
+          3. [x] Buy products - checkout
+          4. [x] Add products to cart
+          5. [x] Like products
+          6. [x] Show my orders
+5. [x] The product information (including images) should be visible for logged and not logged users - still missing the images currently handle just one image
+6. [ ] Swagger/Postman documentation
+7. [ ] Tests, with a least a 80% of coverage
+
+## Extra points (optional)
+
+1. [ ] e2e testing, this will be considered very valuable
+2. [ ] When the stock of a product reaches 3, notify the last user that liked it and not purchased the product yet with an email. Use a background job and make sure to include the product's image in the email.
+3. [ ] Add forgot password functionality
+4. [ ] Send an email when the user change the password
+5. [ ] Deploy on Heroku

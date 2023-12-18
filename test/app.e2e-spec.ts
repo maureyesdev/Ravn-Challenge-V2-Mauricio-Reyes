@@ -16,6 +16,29 @@ describe('AppController (e2e)', () => {
   });
 
   describe('gql', () => {
+    describe('createProducts', () => {
+      it('should create a product', () => {
+        return request(app.getHttpServer())
+          .post('/graphql')
+          .send({
+            query:
+              'mutation create_product($data: CreateProductDataInput!) { createProduct(data: $data) { id name price image stock } }',
+            variables: {
+              data: {
+                name: 'Product 1',
+                price: 100,
+                image: 'http://localhost:3000/image.png',
+                stock: 100,
+              },
+            },
+          })
+          .expect(200)
+          .expect((res) => {
+            expect(res.body.data.createProduct).toEqual({ id: '1' });
+          });
+      });
+    });
+
     describe('products', () => {
       it('should get products', () => {
         return request(app.getHttpServer())
