@@ -10,6 +10,7 @@ import { CreateUserCommandHandler } from '@quickcart/users/application/commands/
 import { LikeProductCommandHandler } from '@quickcart/users/application/commands/like-product/like-product-command-handler';
 import { User, UserRole } from '@quickcart/users/domain/entities/user';
 import { AddProductToCartArgs } from '@quickcart/users/infrastructure/ins/gql/args/add-product-to-cart.args';
+import { CheckoutArgs } from '@quickcart/users/infrastructure/ins/gql/args/checkout-args';
 import { CreateUserArgs } from '@quickcart/users/infrastructure/ins/gql/args/create-user.args';
 import { LikeProductArgs } from '@quickcart/users/infrastructure/ins/gql/args/like-product.args';
 import { UserModel } from '@quickcart/users/infrastructure/ins/gql/models/user.model';
@@ -18,7 +19,6 @@ import { UserModel } from '@quickcart/users/infrastructure/ins/gql/models/user.m
 export class UsersResolver {
   constructor(
     private readonly createUserCommandHandler: CreateUserCommandHandler,
-
     private readonly addProductToCartCommandHandler: AddProductToCartCommandHandler,
     private readonly likeProductCommandHandler: LikeProductCommandHandler,
     private readonly checkoutCommandHandler: CheckoutCommandHandler,
@@ -68,7 +68,10 @@ export class UsersResolver {
   }
 
   @Mutation(() => Boolean)
-  checkout(@Args() args: any) {
-    return this.checkoutCommandHandler.execute(args);
+  checkout(
+    @Args() args: CheckoutArgs,
+    @CurrentUser() user: Omit<User, 'password'>,
+  ) {
+    return this.checkoutCommandHandler.execute({ ...args, user });
   }
 }

@@ -26,7 +26,8 @@
     "prisma:migration:generate": "prisma migrate dev --create-only --schema=$npm_package_vars_prisma_schema",
     "prisma:migration:apply": "pnpm format:sql && prisma migrate deploy --schema=$npm_package_vars_prisma_schema",
     "prisma:studio": "prisma studio --schema=$npm_package_vars_prisma_schema",
-    "prisma:generate:client": "prisma generate --schema=$npm_package_vars_prisma_schema"
+    "prisma:generate:client": "prisma generate --schema=$npm_package_vars_prisma_schema",
+    "prisma:seed": "ts-node $npm_package_vars_prisma_seed_location"
   },
   "dependencies": {
     "@apollo/server": "^4.9.5",
@@ -87,7 +88,8 @@
   "vars": {
     "prisma": {
       "schema": "./src/common/infrastructure/outs/persistence/prisma/schema.prisma",
-      "migrations_dir": "./src/common/infrastructure/outs/persistence/prisma/migrations"
+      "migrations_dir": "./src/common/infrastructure/outs/persistence/prisma/migrations",
+      "seed_location": "./src/common/infrastructure/outs/persistence/prisma/common/seed.ts"
     }
   }
 }

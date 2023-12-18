@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
+import { PasswordEncryptorService } from '@quickcart/common/domain/services/password-encryptor-service';
+import { BcryptPasswordEncryptorService } from '@quickcart/common/infrastructure/outs/password-encryptor/bcrypt/bcrypt-password-encryptor.service';
 import { PrismaService } from '@quickcart/common/infrastructure/outs/persistence/prisma/common/prisma.service';
+import { ProductRepository } from '@quickcart/products/domain/repositories/product-repository';
+import { PrismaProductRepository } from '@quickcart/products/infrastructure/outs/persistence/prisma/prisma-product.repository';
 import { AddProductToCartCommandHandler } from '@quickcart/users/application/commands/add-product-to-cart/add-product-to-cart-command-handler';
+import { CheckoutCommandHandler } from '@quickcart/users/application/commands/checkout/checkout-command-handler';
 import { CreateUserCommandHandler } from '@quickcart/users/application/commands/create-user/create-user-command-handler';
 import { LikeProductCommandHandler } from '@quickcart/users/application/commands/like-product/like-product-command-handler';
 import { CartRepository } from '@quickcart/users/domain/repositories/cart-repository';
@@ -18,8 +23,14 @@ import { PrismaUserRepository } from '@quickcart/users/infrastructure/outs/persi
     { provide: UserRepository, useClass: PrismaUserRepository },
     // carts
     { provide: CartRepository, useClass: PrismaCartRepository },
+    { provide: ProductRepository, useClass: PrismaProductRepository },
     AddProductToCartCommandHandler,
     LikeProductCommandHandler,
+    CheckoutCommandHandler,
+    {
+      provide: PasswordEncryptorService,
+      useClass: BcryptPasswordEncryptorService,
+    },
   ],
 })
 export class UsersModule {}
