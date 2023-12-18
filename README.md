@@ -109,7 +109,7 @@ Example: snack store, pet store, drug store.
    2.  As a client I can:
           1. [x] See products - getProductsQueryHandler
           2. [X] See the product details - getProductQueryHandler
-          3. [ ] Buy products - checkout
+          3. [x] Buy products - checkout
           4. [x] Add products to cart
           5. [x] Like products
           6. [ ] Show my orders

@@ -1,7 +1,9 @@
-export const CartStatus = {
-  Active: 'Active',
-  CheckedOut: 'CheckedOut',
-} as const;
+import { CartItem } from '@quickcart/users/domain/entities/cart-item';
+
+export enum CartStatus {
+  Active = 'Active',
+  CheckedOut = 'CheckedOut',
+}
 
 export type CartCreateData = {
   userId: number;
@@ -18,7 +20,8 @@ export class Cart {
   id: number;
   userId: number;
   status: keyof typeof CartStatus;
-  // items: CartItem[]
+  items: CartItem[];
+  total: number;
   createdAt?: Date;
   updatedAt?: Date;
 
@@ -26,6 +29,7 @@ export class Cart {
     this.id = -1;
     this.userId = props.data.userId;
     this.status = props.data.status ?? CartStatus.Active;
+    this.total = 0;
     this.createdAt = props.data.createdAt;
     this.updatedAt = props.data.updatedAt;
   }

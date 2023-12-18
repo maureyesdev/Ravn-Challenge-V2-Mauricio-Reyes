@@ -5,6 +5,7 @@ import { UserRoles } from '@quickcart/auth/infrastructure/ins/decorators/user-ro
 import { JwtAuthGuard } from '@quickcart/auth/infrastructure/outs/guards/jwt-auth.guard';
 import { UserRolesGuard } from '@quickcart/auth/infrastructure/outs/guards/user-roles.guard';
 import { AddProductToCartCommandHandler } from '@quickcart/users/application/commands/add-product-to-cart/add-product-to-cart-command-handler';
+import { CheckoutCommandHandler } from '@quickcart/users/application/commands/checkout/checkout-command-handler';
 import { CreateUserCommandHandler } from '@quickcart/users/application/commands/create-user/create-user-command-handler';
 import { LikeProductCommandHandler } from '@quickcart/users/application/commands/like-product/like-product-command-handler';
 import { User, UserRole } from '@quickcart/users/domain/entities/user';
@@ -20,6 +21,7 @@ export class UsersResolver {
 
     private readonly addProductToCartCommandHandler: AddProductToCartCommandHandler,
     private readonly likeProductCommandHandler: LikeProductCommandHandler,
+    private readonly checkoutCommandHandler: CheckoutCommandHandler,
   ) {}
 
   @UseGuards(JwtAuthGuard, UserRolesGuard)
@@ -63,5 +65,10 @@ export class UsersResolver {
   @Mutation(() => Boolean)
   likeProduct(@Args() args: LikeProductArgs) {
     return this.likeProductCommandHandler.execute(args);
+  }
+
+  @Mutation(() => Boolean)
+  checkout(@Args() args: any) {
+    return this.checkoutCommandHandler.execute(args);
   }
 }

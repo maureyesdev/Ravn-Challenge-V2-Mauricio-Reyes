@@ -3,9 +3,11 @@ import { CartStatus } from '@prisma/client';
 import { PrismaService } from '@quickcart/common/infrastructure/outs/persistence/prisma/common/prisma.service';
 import { Cart } from '@quickcart/users/domain/entities/cart';
 import { CartRepository } from '@quickcart/users/domain/repositories/cart-repository';
+import { CartCheckoutArgs } from '@quickcart/users/domain/repositories/types/cart-checkout-args';
 import { CartCreateOneArgs } from '@quickcart/users/domain/repositories/types/cart-create-one-args';
 import { CartCreateOneCartItemArgs } from '@quickcart/users/domain/repositories/types/cart-create-one-cart-item-args';
 import { CartFindOneArgs } from '@quickcart/users/domain/repositories/types/cart-find-one-args';
+import { CartUpdateOneArgs } from '@quickcart/users/domain/repositories/types/cart-update-one-args';
 
 @Injectable()
 export class PrismaCartRepository implements CartRepository {
@@ -16,23 +18,71 @@ export class PrismaCartRepository implements CartRepository {
       data: {
         user: { connect: { id: args.data.userId } },
         status: CartStatus.Active,
+        // When creating new carts with no items, the total is 0
+        total: 0,
       },
+      include: { cartItem: true },
     });
-    return cart;
+    return {
+      ...cart,
+      items: cart.cartItem,
+    };
   }
 
   findOne(_: CartFindOneArgs): Promise<Cart> {
     throw new Error('Method not implemented.');
   }
 
+  async updateOneCart(args: CartUpdateOneArgs): Promise<Cart> {
+    const updatedCart = await this.prismaService.cart.update({
+      data: {
+        status: args.data.status,
+        total: args.data.total,
+      },
+      where: {
+        id: args.where.id,
+      },
+      include: { cartItem: true },
+    });
+    return {
+      ...updatedCart,
+      items: updatedCart.cartItem,
+    };
+  }
+
   async findActiveCartByUserId(userId: number): Promise<Cart> {
     const cart = await this.prismaService.cart.findFirst({
       where: { status: CartStatus.Active, userId: userId },
+      include: { cartItem: true },
     });
-    return cart;
+    return {
+      ...cart,
+      items: cart.cartItem,
+    };
   }
 
   createOneCartItem(_: CartCreateOneCartItemArgs): Promise<unknown> {
     throw new Error('Method not implemented.');
+  }
+
+  async checkout(args: CartCheckoutArgs): Promise<boolean> {
+    try {
+      await this.prismaService.$transaction(async (tx) => {
+        for (const cartItem of args.items) {
+          // 1. Decrement product stock
+          const product = await tx.product.update({
+            data: { stock: { decrement: cartItem.quantity } },
+            where: { id: cartItem.productId },
+          });
+          // 2. Check if product stock is not below zero
+          if (product.stock < 0) {
+            throw new Error('No enough stock');
+          }
+        }
+      });
+      return true;
+    } catch (error) {
+      throw new Error(`Error checking out cart: ${error.message}`);
+    }
   }
 }
