@@ -112,7 +112,7 @@ Example: snack store, pet store, drug store.
           3. [x] Buy products - checkout
           4. [x] Add products to cart
           5. [x] Like products
-          6. [ ] Show my orders
+          6. [x] Show my orders
 5. [x] The product information (including images) should be visible for logged and not logged users - still missing the images currently handle just one image
 6. [ ] Swagger/Postman documentation
 7. [ ] Tests, with a least a 80% of coverage

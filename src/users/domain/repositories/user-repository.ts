@@ -7,6 +7,7 @@ import { UserFindOneArgs } from '@quickcart/users/domain/types/user-find-one-arg
 export abstract class UserRepository {
   abstract createOne(args: UserCreateOneArgs): Promise<User>;
   abstract findOne(args: UserFindOneArgs): Promise<User | null>;
+  abstract findOneWithCarts(args: UserFindOneArgs): Promise<User | null>;
   abstract likeOneProduct(args: UserLikeOneProductArgs): Promise<boolean>;
   abstract findManyOrders(args: any): Promise<PaginatedData<User>>;
 }

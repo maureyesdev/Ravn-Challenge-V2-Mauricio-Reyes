@@ -8,6 +8,7 @@ import { AddProductToCartCommandHandler } from '@quickcart/users/application/com
 import { CheckoutCommandHandler } from '@quickcart/users/application/commands/checkout/checkout-command-handler';
 import { CreateUserCommandHandler } from '@quickcart/users/application/commands/create-user/create-user-command-handler';
 import { LikeProductCommandHandler } from '@quickcart/users/application/commands/like-product/like-product-command-handler';
+import { GetMyOrdersQueryHandler } from '@quickcart/users/application/queries/get-my-orders/get-my-orders-query-handler';
 import { GetUsersOrdersQueryHandler } from '@quickcart/users/application/queries/get-users-orders/get-users-orders-query-handler';
 import { CartRepository } from '@quickcart/users/domain/repositories/cart-repository';
 import { UserRepository } from '@quickcart/users/domain/repositories/user-repository';
@@ -29,6 +30,7 @@ import { PrismaUserRepository } from '@quickcart/users/infrastructure/outs/persi
     LikeProductCommandHandler,
     CheckoutCommandHandler,
     GetUsersOrdersQueryHandler,
+    GetMyOrdersQueryHandler,
     {
       provide: PasswordEncryptorService,
       useClass: BcryptPasswordEncryptorService,

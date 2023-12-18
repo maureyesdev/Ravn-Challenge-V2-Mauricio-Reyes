@@ -59,4 +59,15 @@ export class PrismaUserRepository implements UserRepository {
     );
     return { pagination, data: data as User[] };
   }
+
+  async findOneWithCarts(args: UserFindOneArgs): Promise<User> {
+    const user = this.prismaService.user.findUnique({
+      where: { id: args.where.id },
+      include: { cart: { include: { cartItem: true } } },
+    });
+    if (!user) {
+      return null;
+    }
+    return user;
+  }
 }
