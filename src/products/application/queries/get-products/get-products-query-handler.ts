@@ -11,6 +11,8 @@ export class GetProductsQueryHandler {
   async execute(query: GetProductsQuery): Promise<PaginatedData<Product>> {
     const paginatedProducts = await this.productRepository.findMany({
       where: query.where,
+      take: query.take,
+      page: query.page,
     });
     return paginatedProducts;
   }

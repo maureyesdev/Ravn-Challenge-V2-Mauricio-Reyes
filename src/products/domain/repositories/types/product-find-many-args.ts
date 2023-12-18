@@ -2,4 +2,6 @@ import { ProductFindManyWhere } from '@quickcart/products/domain/repositories/ty
 
 export type ProductFindManyArgs = {
   where?: ProductFindManyWhere;
+  take?: number;
+  page?: number;
 };

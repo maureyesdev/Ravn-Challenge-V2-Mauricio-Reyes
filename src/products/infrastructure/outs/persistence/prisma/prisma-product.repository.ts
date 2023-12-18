@@ -34,10 +34,11 @@ export class PrismaProductRepository implements ProductRepository {
   }
 
   async findMany(args: ProductFindManyArgs): Promise<PaginatedData<Product>> {
-    const { where } = args;
+    const { where, take, page } = args;
     const { pagination, data } = await this.prismaService.paginate(
       this.prismaService.product,
       { where, include: { categories: true } },
+      { page, perPage: take },
     );
 
     return { pagination, data: data as Product[] };
